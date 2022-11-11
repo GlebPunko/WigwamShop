@@ -1,0 +1,88 @@
+version: '3.4'
+
+services:
+  basketapi:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/BasketAPI/Dockerfile
+    depends_on:
+      - pg_db
+      - broker
+      - sqldata
+
+  catalogapi:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: Services/Catalog/CatalogAPI/Dockerfile
+    depends_on:
+      - pg_db
+      - broker
+      - sqldata
+
+  identityapi:
+    image: ${DOCKER_REGISTRY-}identityapi
+    build:
+      context: .
+      dockerfile: Services/IdentityServer/IdentityServerAPI/Dockerfile
+    depends_on:
+      - sqldata
+      - broker
+
+  ocelotapi1:
+    container_name: ocelotapi1
+    image: ${DOCKER_REGISTRY-}ocelotapi1
+    build:
+      context: .
+      dockerfile: OcelotAPI1/Dockerfile
+    depends_on:
+     - basketapi
+     - catalogapi
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+
+  pg_db:
+    image: postgres:latest
+    
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.0
+    hostname: zookeeper
+    container_name: zoookeeper
+
+  broker:
+    image: confluentinc/cp-kafka:7.0.0
+    container_name: broker
+    depends_on:
+      - zookeeper
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.1
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.16.1
+    depends_on:
+      - elasticsearch
+
+  signalrchat:
+    container_name: signalrchat
+    image: ${DOCKER_REGISTRY-}signalrchat
+    build:
+      context: .
+      dockerfile: SignalRChat/Dockerfile
+    depends_on:
+      - sqldata
+
+  client:
+    image: client
+    build: 
+      context: ./UI/signalrchat.frontend
+      dockerfile: Dockerfile
+
+  proxy:
+    image: nginx:alpine
+    depends_on:
+      - client

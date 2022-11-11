@@ -1,0 +1,130 @@
+version: '3.4'
+
+services:
+  basketapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5101:80"
+    networks:
+      - elknetw
+
+  catalogapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5102:80"
+    networks:
+      - elknetw
+
+  identityapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5103:80"
+    networks:
+      - elknetw
+
+  ocelotapi1:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "8002:80"
+    networks: 
+     - elknetw
+
+  sqldata:
+    environment:
+      - "MSSQL_SA_PASSWORD=Password111!" 
+      - "ACCEPT_EULA=Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - elknetw
+
+  pg_db:
+    environment:
+      - POSTGRES_PASSWORD=1111 
+      - POSTGRES_USER=sa
+      - POSTGRES_DB=PgDbTest
+      - ACCEPT_EULA=Y
+    ports:
+      - "5432:5432"
+    networks:
+      - elknetw
+
+  zookeeper:
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - elknetw
+
+  broker:
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - elknetw
+
+  elasticsearch:
+     ports:
+      - 9200:9200
+     volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+     environment:
+      - xpack.monitoring.enabled=true
+      - xpack.watcher.enabled=false
+      - xpack.ml.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+     networks:
+      - elknetw
+
+  kibana:
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_URL="http://elasticsearch:9200"
+    networks:
+      - elknetw
+
+  signalrchat:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5021:80"
+    networks:
+      - elknetw
+
+  client:
+    ports:
+      - "5000:3000" 
+    networks:
+      - elknetw
+
+  proxy:
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "5030:80"
+    networks:
+      - elknetw
+volumes:
+  elasticsearch-data:
+
+networks:
+  elknetw:
+    driver: bridge

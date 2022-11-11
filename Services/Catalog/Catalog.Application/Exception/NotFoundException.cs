@@ -1,0 +1,8 @@
+﻿namespace Catalog.Application.CustomException
+{
+    public class NotFoundException : ArgumentNullException
+    {
+        public NotFoundException(string name)
+            : base($"Entity \"{name}\" not found.") { }
+    }
+}

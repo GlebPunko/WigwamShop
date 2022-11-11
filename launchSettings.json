@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "basketapi": "StartWithoutDebugging",
+        "broker": "StartWithoutDebugging",
+        "catalogapi": "StartWithoutDebugging",
+        "elasticsearch": "StartWithoutDebugging",
+        "identityapi": "StartWithoutDebugging",
+        "kibana": "StartWithoutDebugging",
+        "pg_db": "StartWithoutDebugging",
+        "sqldata": "StartWithoutDebugging",
+        "zookeeper": "StartWithoutDebugging"
+      }
+    }
+  }
+}
