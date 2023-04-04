@@ -15,6 +15,9 @@ const Header = (props) => {
                     <img width={18} height={18} src="/img/basket.svg" alt="BasketImg"/>
                     <span>1205 руб.</span>
                 </li>
+                <li className="cu-p">
+                    <img width={18} height={18} src="/img/heard.svg" alt="Notes"/>
+                </li>
                 <li>
                     <img width={18} height={18} src="/img/user.svg" alt="UserImg"/>
                 </li>
