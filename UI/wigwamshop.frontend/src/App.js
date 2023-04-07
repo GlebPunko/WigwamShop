@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import Drawer from './components/Drawer/Drawer';
 import AppContext from './context';
 
-import Home from './pages/Home';
-import Favorites from './pages/Favorites';
-import Orders from './pages/Orders';
+import Home from './pages/Home/Home';
+import Favorites from './pages/Favorites/Favorites';
+import Orders from './pages/Orders/Orders';
 
 function App() {
   const [items, setItems] = React.useState([]);

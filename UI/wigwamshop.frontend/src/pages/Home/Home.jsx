@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Card from '../components/Card/Card';
+import Card from '../../components/Card/Card';
+import styles from './Home.module.scss'
 
 function Home({
   items,
@@ -27,10 +28,10 @@ function Home({
   };
 
   return (//TODO use scss only
-    <div className="content p-40">
+    <div className={styles.content}>
       <div className="d-flex align-center justify-between mb-40">
         <h1>{searchValue ? `Поиск по запросу: "${searchValue}"` : 'Все вигвамы'}</h1>
-        <div className="search-block d-flex">
+        <div className={styles.searchBlock}>
           <img src="img/search.svg" alt="Search" />
           {searchValue && (
             <img

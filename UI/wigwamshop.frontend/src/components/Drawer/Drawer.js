@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import Info from '../Info';
+import Info from '../Info/Info';
 import { useCart } from '../../hooks/useCart';
 
 import styles from './Drawer.module.scss';
@@ -44,12 +44,12 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
 
         {items.length > 0 ? (
           <div className="d-flex flex-column flex">
-            <div className="items flex">
+            <div className={styles.items}>
               {items.map((obj) => (
-                <div key={obj.id} className="cartItem d-flex align-center mb-20">
+                <div key={obj.id} className={styles.cartItem}>
                   <div
                     style={{ backgroundImage: `url(${obj.imageUrl})` }}
-                    className="cartItemImg"></div>
+                    className={styles.cartItemImg}></div>
 
                   <div className="mr-20 flex">
                     <p className="mb-5">{obj.title}</p>
@@ -57,14 +57,14 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                   </div>
                   <img
                     onClick={() => onRemove(obj.id)}
-                    className="removeBtn"
+                    className={styles.removeBtn}
                     src="img/btn-remove.svg"
                     alt="Remove"
                   />
                 </div>
               ))}
             </div>
-            <div className="cartTotalBlock">
+            <div className={styles.cartTotalBlock}>
               <ul>
                 <li>
                   <span>Итого:</span>
@@ -77,7 +77,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                   <b>{(totalPrice / 100) * 5} руб. </b>
                 </li>
               </ul>
-              <button disabled={isLoading} onClick={onClickOrder} className="greenButton">
+              <button disabled={isLoading} onClick={onClickOrder} className={styles.greenButton}>
                 Оформить заказ <img src="img/arrow.svg" alt="Arrow" />
               </button>
             </div>
