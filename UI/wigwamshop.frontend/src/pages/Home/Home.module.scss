@@ -6,6 +6,13 @@
   }
 }
 
+.flexContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
 .searchBlock {
   display: flex;
   border: 1px solid #f3f3f3;
@@ -20,6 +27,7 @@
     height: 18px;
     top: 14px;
     right: 15px;
+    cursor: pointer;
   }
 
   input {
@@ -28,4 +36,9 @@
     font-size: 16px;
     width: 200px;
   }
+}
+
+.renderItems {
+  display: flex;
+  flex-wrap: wrap;
 }

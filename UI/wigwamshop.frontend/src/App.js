@@ -69,30 +69,35 @@ function App() {
     }
   };
 
+  const onAddToFavorite = async (obj) => {
+    try {
+      const findItem = favorites.find((favObj) => Number(favObj.id) === Number(obj.id));
+      if (findItem) {
+        console.log("delete");
+        console.log(findItem)
+        setFavorites((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
+        await axios.delete(`https://642be4ded7081590f92c7388.mockapi.io/favorites/${findItem.id}`);
+      } else {
+        console.log("add");
+        console.log(findItem)
+        const { data } = await axios.post(
+            'https://642be4ded7081590f92c7388.mockapi.io/favorites',
+            obj,
+        );
+        setFavorites((prev) => [...prev, data]);
+      }
+    } catch (error) {
+      alert('Не удалось добавить в фавориты');
+      console.error(error);
+    }
+  };
+
   const onRemoveItem = (id) => {
     try {
       axios.delete(`https://642b60f0d7081590f92179f8.mockapi.io/cart/${id}`);
       setCartItems((prev) => prev.filter((item) => Number(item.id) !== Number(id)));
     } catch (error) {
       alert('Ошибка при удалении из корзины');
-      console.error(error);
-    }
-  };
-
-  const onAddToFavorite = async (obj) => {
-    try {
-      if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
-        axios.delete(`https://642be4ded7081590f92c7388.mockapi.io/favorites/${obj.id}`);
-        setFavorites((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
-      } else {
-        const { data } = await axios.post(
-          'https://642be4ded7081590f92c7388.mockapi.io/favorites',
-          obj,
-        );
-        setFavorites((prev) => [...prev, data]);
-      }
-    } catch (error) {
-      alert('Не удалось добавить в фавориты');
       console.error(error);
     }
   };
@@ -104,46 +109,26 @@ function App() {
   const isItemAdded = (id) => {
     return cartItems.some((obj) => Number(obj.parentId) === Number(id));
   };
-//todo add file "Routes" with routes
   return (
     <AppContext.Provider
-      value={{
-        items,
-        cartItems,
-        favorites,
-        isItemAdded,
-        onAddToFavorite,
-        onAddToCart,
-        setCartOpened,
-        setCartItems,
+      value={{items, cartItems, favorites, isItemAdded, onAddToFavorite,
+        onAddToCart, setCartOpened, setCartItems,
       }}>
       <div className="wrapper clear">
-        <Drawer
-          items={cartItems}
-          onClose={() => setCartOpened(false)}
-          onRemove={onRemoveItem}
-          opened={cartOpened}
+        <Drawer items={cartItems} onClose={() => setCartOpened(false)}
+          onRemove={onRemoveItem} opened={cartOpened}
         />
 
         <Header onClickCart={() => setCartOpened(true)} />
         <Switch>
           <Route path="/" exact>
-            <Home
-              items={items}
-              cartItems={cartItems}
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-              onChangeSearchInput={onChangeSearchInput}
-              onAddToFavorite={onAddToFavorite}
-              onAddToCart={onAddToCart}
-              isLoading={isLoading}
-                          />
+            <Home items={items} cartItems={cartItems} searchValue={searchValue}
+                  setSearchValue={setSearchValue} onChangeSearchInput={onChangeSearchInput}
+                  onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart} isLoading={isLoading}/>
           </Route>
-
           <Route path="/favorites" exact>
             <Favorites />
           </Route>
-
           <Route path="/orders" exact>
             <Orders />
           </Route>

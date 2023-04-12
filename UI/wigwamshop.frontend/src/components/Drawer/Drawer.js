@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 
 import Info from '../Info/Info';
@@ -10,9 +10,9 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function Drawer({ onClose, onRemove, items = [], opened }) {
   const { cartItems, setCartItems, totalPrice } = useCart();
-  const [orderId, setOrderId] = React.useState(null);
-  const [isOrderComplete, setIsOrderComplete] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [orderId, setOrderId] = useState(null);
+  const [isOrderComplete, setIsOrderComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onClickOrder = async () => {
     try {
@@ -38,12 +38,12 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
   return (
     <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
       <div className={styles.drawer}>
-        <h2 className="d-flex justify-between mb-30">
-          Корзина <img onClick={onClose} className="cu-p" src="img/btn-remove.svg" alt="Close" />
+        <h2 className={styles.basketTitle}>
+          Корзина <img onClick={onClose} className={styles.basketClose} src="img/btn-remove.svg" alt="Close" />
         </h2>
 
         {items.length > 0 ? (
-          <div className="d-flex flex-column flex">
+          <div className={styles.itemsWrapper}>
             <div className={styles.items}>
               {items.map((obj) => (
                 <div key={obj.id} className={styles.cartItem}>
@@ -51,8 +51,8 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                     style={{ backgroundImage: `url(${obj.imageUrl})` }}
                     className={styles.cartItemImg}></div>
 
-                  <div className="mr-20 flex">
-                    <p className="mb-5">{obj.title}</p>
+                  <div className={styles.cartInfo}>
+                    <p className={styles.cartTitle}>{obj.title}</p>
                     <b>{obj.price} руб.</b>
                   </div>
                   <img
@@ -88,7 +88,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
             description={
               isOrderComplete
                 ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке`
-                : 'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'
+                : 'Добавьте хотя бы один вигвам, чтобы сделать заказ.'
             }
             image={isOrderComplete ? 'img/complete-order.jpg' : 'img/empty-cart.jpg'}
           />

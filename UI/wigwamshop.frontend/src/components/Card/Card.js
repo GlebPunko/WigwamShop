@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import ContentLoader from 'react-content-loader';
 
 import AppContext from '../../context';
@@ -15,8 +15,8 @@ function Card({
   favorited = false,
   loading = false,
 }) {
-  const { isItemAdded } = React.useContext(AppContext);
-  const [isFavorite, setIsFavorite] = React.useState(favorited);
+  const { isItemAdded } = useContext(AppContext);
+  const [isFavorite, setIsFavorite] = useState(favorited);
   const obj = { id, parentId: id, title, imageUrl, price };
 
   const onClickPlus = () => {
@@ -24,6 +24,7 @@ function Card({
   };
 
   const onClickFavorite = () => {
+    console.log(obj)
     onFavorite(obj);
     setIsFavorite(!isFavorite);
   };
@@ -53,8 +54,8 @@ function Card({
           )}
           <img width="100%" height={135} src={imageUrl} alt="Wigwams" />
           <h5>{title}</h5>
-          <div className="d-flex justify-between align-center">
-            <div className="d-flex flex-column">
+          <div className={styles.afterTitle}>
+            <div className={styles.price}>
               <span>Цена:</span>
               <b>{price} руб.</b>
             </div>

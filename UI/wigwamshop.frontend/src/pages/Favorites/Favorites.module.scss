@@ -5,3 +5,15 @@
     margin: 0;
   }
 }
+
+.contentFlex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+}

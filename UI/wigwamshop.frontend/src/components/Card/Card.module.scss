@@ -36,3 +36,14 @@
     font-size: 14px;
   }
 }
+
+.afterTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+}

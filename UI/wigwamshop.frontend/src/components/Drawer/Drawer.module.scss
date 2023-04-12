@@ -124,6 +124,7 @@
       right: 30px;
       top: 20px;
       transition: transform 0.15s ease-in-out;
+      cursor: pointer;
     }
   }
 }
@@ -153,3 +154,30 @@
     background: darken(#9dd558, 5%);
   }
 }
+
+.basketTitle {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.basketClose {
+  cursor: pointer;
+}
+
+.itemsWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cartInfo {
+  margin-right: 20px;
+  flex: 1;
+}
+
+.cartTitle {
+  margin-bottom: 5px;
+}
+
+
