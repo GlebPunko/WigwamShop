@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import Header from './components/Header/Header';
@@ -10,14 +10,14 @@ import Favorites from './pages/Favorites/Favorites';
 import Orders from './pages/Orders/Orders';
 
 function App() {
-  const [items, setItems] = React.useState([]);
-  const [cartItems, setCartItems] = React.useState([]);
-  const [favorites, setFavorites] = React.useState([]);
-  const [searchValue, setSearchValue] = React.useState('');
-  const [cartOpened, setCartOpened] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [items, setItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [cartOpened, setCartOpened] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function fetchData() {
       try {
         const [cartResponse, favoritesResponse, itemsResponse] = await Promise.all([
