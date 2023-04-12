@@ -2,34 +2,36 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useCart } from '../../hooks/useCart';
+import ImageUrls from "../../const/inageUrls";
+import styles from './Header.module.scss'
 
 function Header(props) {
   const { totalPrice } = useCart();
 
   return (
-    <header className="d-flex justify-between align-center p-40">
+    <header className={styles.headerCont}>
       <Link to="/">
-        <div className="d-flex align-center">
-          <img width={40} height={40} src="img/logo.png" alt="Logotype" />
+        <div className={styles.headerInfo}>
+          <img width={40} height={40} src={ImageUrls.logo} alt="Logotype" />
           <div>
-            <h3 className="text-uppercase">Магазин вигвамов</h3>
-            <p className="opacity-5">Магазин лучших вигвамов</p>
+            <h3 className={styles.text}>Магазин вигвамов</h3>
+            <p className={styles.text}>Магазин лучших вигвамов</p>
           </div>
         </div>
       </Link>
-      <ul className="d-flex">
-        <li onClick={props.onClickCart} className="mr-30 cu-p">
-          <img width={18} height={18} src="img/cart.svg" alt="Корзина" />
+      <ul className={styles.list}>
+        <li onClick={props.onClickCart} className={styles.basket}>
+          <img width={18} height={18} src={ImageUrls.cart} alt="Корзина" />
           <span>{totalPrice} руб.</span>
         </li>
-        <li className="mr-20 cu-p">
+        <li>
           <Link to="/favorites">
-            <img width={18} height={18} src="img/heart.svg" alt="Закладки" />
+            <img width={18} height={18} src={ImageUrls.heart} alt="Закладки" />
           </Link>
         </li>
         <li>
           <Link to="/orders">
-            <img width={18} height={18} src="img/user.svg" alt="Пользователь" />
+            <img width={18} height={18} src={ImageUrls.user} alt="Пользователь" />
           </Link>
         </li>
       </ul>

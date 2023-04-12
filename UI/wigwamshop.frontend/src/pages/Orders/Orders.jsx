@@ -1,18 +1,19 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import axios from 'axios';
 
 import Card from '../../components/Card/Card';
 import AppContext from '../../context';
+import RequestUrls from "../../const/requestUrls";
 
 function Orders() {
-  const { onAddToFavorite, onAddToCart } = React.useContext(AppContext);
-  const [orders, setOrders] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const { onAddToFavorite, onAddToCart } = useContext(AppContext);
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   React.useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get('https://60d62397943aa60017768e77.mockapi.io/orders');//TODO будет чуть позже, но должно работать, наверное, делал как и сотальные запросы
+        const { data } = await axios.get(RequestUrls.getOrders);//TODO будет чуть позже, но должно работать, наверное, делал как и сотальные запросы
         setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
         setIsLoading(false);
       } catch (error) {

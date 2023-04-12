@@ -1,0 +1,29 @@
+.headerCont {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+}
+
+.headerInfo {
+  display: flex;
+  align-items: center;
+}
+
+h3.text {
+  text-transform: uppercase;
+}
+
+p.text {
+  opacity: 0.5;
+}
+
+.list {
+  display: flex;
+  cursor: pointer;
+}
+
+.basket {
+  margin-right: 30px;
+  cursor: pointer;
+}

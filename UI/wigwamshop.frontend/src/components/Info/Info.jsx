@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import AppContext from '../../context';
 import styles from './Info.module.scss'
+import ImageUrls from "../../const/inageUrls";
 
 const Info = ({ title, image, description }) => {
   const { setCartOpened } = useContext(AppContext);
@@ -11,7 +12,7 @@ const Info = ({ title, image, description }) => {
       <h2>{title}</h2>
       <p className={styles.description}>{description}</p>
       <button onClick={() => setCartOpened(false)} className={styles.greenButton}>
-        <img src="img/arrow.svg" alt="Arrow" />
+        <img src={ImageUrls.arrow} alt="Arrow" />
         Вернуться назад
       </button>
     </div>

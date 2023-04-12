@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Card from '../../components/Card/Card';
 import AppContext from '../../context';
 import styles from './Favorites.module.scss';
 
 function Favorites() {
-  const { favorites, onAddToFavorite } = React.useContext(AppContext);
+  const { favorites, handleAddToFavorite } = useContext(AppContext);
 
   return (
     <div className={styles.content}>
@@ -14,7 +14,7 @@ function Favorites() {
 
       <div className={styles.cards}>
         {favorites.map((item, index) => (
-          <Card key={index} favorited={true} onFavorite={onAddToFavorite} {...item} />
+          <Card key={index} favorited={true} onFavorite={handleAddToFavorite} {...item} />
         ))}
       </div>
     </div>

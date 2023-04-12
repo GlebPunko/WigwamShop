@@ -3,8 +3,9 @@ import axios from 'axios';
 
 import Info from '../Info/Info';
 import { useCart } from '../../hooks/useCart';
-
+import RequestUrls from "../../const/requestUrls";
 import styles from './Drawer.module.scss';
+import ImageUrls from "../../const/inageUrls";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -17,7 +18,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
   const onClickOrder = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.post('/orders', {
+      const { data } = await axios.post(RequestUrls.postOrder, {
         items: cartItems,
       });
       setOrderId(data.id);
@@ -26,7 +27,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
 
       for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
-        await axios.delete('/cart/' + item.id);
+        await axios.delete(RequestUrls.deleteCart(item.id));
         await delay(1000);
       }
     } catch (error) {
@@ -39,7 +40,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
     <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
       <div className={styles.drawer}>
         <h2 className={styles.basketTitle}>
-          Корзина <img onClick={onClose} className={styles.basketClose} src="img/btn-remove.svg" alt="Close" />
+          Корзина <img onClick={onClose} className={styles.basketClose} src={ImageUrls.buttonRemove} alt="Close" />
         </h2>
 
         {items.length > 0 ? (
@@ -58,7 +59,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                   <img
                     onClick={() => onRemove(obj.id)}
                     className={styles.removeBtn}
-                    src="img/btn-remove.svg"
+                    src={ImageUrls.buttonRemove}
                     alt="Remove"
                   />
                 </div>
@@ -78,7 +79,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                 </li>
               </ul>
               <button disabled={isLoading} onClick={onClickOrder} className={styles.greenButton}>
-                Оформить заказ <img src="img/arrow.svg" alt="Arrow" />
+                Оформить заказ <img src={ImageUrls.arrow} alt="Arrow" />
               </button>
             </div>
           </div>
@@ -90,7 +91,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                 ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке`
                 : 'Добавьте хотя бы один вигвам, чтобы сделать заказ.'
             }
-            image={isOrderComplete ? 'img/complete-order.jpg' : 'img/empty-cart.jpg'}
+            image={isOrderComplete ? ImageUrls.completeOrder : ImageUrls.emptyCart}
           />
         )}
       </div>

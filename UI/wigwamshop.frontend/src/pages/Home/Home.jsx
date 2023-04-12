@@ -2,6 +2,7 @@ import React from 'react';
 
 import Card from '../../components/Card/Card';
 import styles from './Home.module.scss'
+import ImageUrls from "../../const/inageUrls";
 
 function Home({items, searchValue, setSearchValue, onChangeSearchInput,
   onAddToFavorite, onAddToCart, isLoading,
@@ -24,12 +25,12 @@ function Home({items, searchValue, setSearchValue, onChangeSearchInput,
       <div className={styles.flexContent}>
         <h1>{searchValue ? `Поиск по запросу: "${searchValue}"` : 'Все вигвамы'}</h1>
         <div className={styles.searchBlock}>
-          <img src="img/search.svg" alt="Search" />
+          <img src={ImageUrls.search} alt="Search" />
           {searchValue && (
             <img
               onClick={() => setSearchValue('')}
               className={styles.clear}
-              src="img/btn-remove.svg"
+              src={ImageUrls.buttonRemove}
               alt="Clear"
             />
           )}
